@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SHOBDOTORI – BITWISEMIND Technical Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --primary: #4F46E5;
+    --primary-dark: #3730A3;
+    --accent: #06B6D4;
+    --accent2: #10B981;
+    --danger: #EF4444;
+    --gold: #F59E0B;
+    --dark: #0F172A;
+    --dark2: #1E293B;
+    --dark3: #334155;
+    --mid: #64748B;
+    --light: #F1F5F9;
+    --lighter: #F8FAFC;
+    --white: #FFFFFF;
+    --border: #E2E8F0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--lighter);
+    color: var(--dark);
+    font-size: 10.5pt;
+    line-height: 1.65;
+  }
+
+  /* ══════════════════════════ COVER PAGE ══════════════════════════ */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 40%, #1a1060 75%, #4F46E5 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 80px;
+    position: relative;
+    page-break-after: always;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(79,70,229,0.25) 0%, transparent 65%);
+    top: -150px; right: -150px;
+    border-radius: 50%;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 65%);
+    bottom: -100px; left: -100px;
+    border-radius: 50%;
+  }
+
+  .cover-badge {
+    background: linear-gradient(90deg, rgba(79,70,229,0.35), rgba(6,182,212,0.35));
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 8px 24px;
+    color: #A5B4FC;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cover-bengali {
+    font-size: 52pt;
+    color: var(--white);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1.0;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg, #ffffff, #A5B4FC, #67E8F9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cover-subtitle-en {
+    font-size: 13pt;
+    color: #94A3B8;
+    font-weight: 400;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+    font-style: italic;
+  }
+
+  .cover-title {
+    font-size: 16pt;
+    font-weight: 700;
+    color: var(--white);
+    max-width: 640px;
+    line-height: 1.4;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cover-desc {
+    font-size: 10.5pt;
+    color: #94A3B8;
+    max-width: 580px;
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cover-metrics {
+    display: flex;
+    gap: 28px;
+    margin-bottom: 52px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .metric-box {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 20px 28px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+  }
+
+  .metric-box .val {
+    font-size: 26pt;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .metric-box .val.green { color: #34D399; }
+  .metric-box .val.blue { color: #67E8F9; }
+  .metric-box .val.purple { color: #A78BFA; }
+
+  .metric-box .lbl {
+    font-size: 8pt;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  .cover-divider {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(79,70,229,0.6), rgba(6,182,212,0.6), transparent);
+    margin: 0 auto 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cover-team {
+    position: relative;
+    z-index: 2;
+  }
+  .cover-team .team-label {
+    font-size: 8.5pt;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .cover-team .team-name {
+    font-size: 14pt;
+    font-weight: 700;
+    color: #C7D2FE;
+  }
+  .cover-team .hackathon {
+    font-size: 9pt;
+    color: #64748B;
+    margin-top: 4px;
+  }
+
+  /* ══════════════════════════ PAGE LAYOUT ══════════════════════════ */
+  .page {
+    background: var(--white);
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    page-break-after: always;
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--primary-dark) 100%);
+    padding: 22px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .page-header .logo-text {
+    font-size: 13pt;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .page-header .logo-text span { color: #A5B4FC; }
+
+  .page-header .page-num {
+    font-size: 9pt;
+    color: #64748B;
+    font-weight: 500;
+  }
+
+  .page-content {
+    padding: 44px 48px 52px;
+  }
+
+  .page-footer {
+    border-top: 1px solid var(--border);
+    padding: 14px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--lighter);
+  }
+  .page-footer span {
+    font-size: 8pt;
+    color: var(--mid);
+  }
+
+  /* ══════════════════════════ HEADINGS ══════════════════════════ */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(90deg, #EEF2FF, #E0F2FE);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 6px 6px 0;
+    padding: 6px 14px 6px 12px;
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+  }
+
+  h2.section-title {
+    font-size: 20pt;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  h3.subsection {
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--dark2);
+    margin: 24px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h3.subsection::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: linear-gradient(180deg, var(--primary), var(--accent));
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .intro-text {
+    color: var(--mid);
+    font-size: 10.5pt;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+  }
+
+  /* ══════════════════════════ CARDS ══════════════════════════ */
+  .card-grid {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .card-grid-2 { grid-template-columns: 1fr 1fr; }
+  .card-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .card-grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+  .card {
+    background: var(--lighter);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .card.primary::before { background: linear-gradient(90deg, var(--primary), var(--accent)); }
+  .card.green::before { background: linear-gradient(90deg, var(--accent2), #34D399); }
+  .card.gold::before { background: linear-gradient(90deg, var(--gold), #FCD34D); }
+  .card.red::before { background: linear-gradient(90deg, var(--danger), #F87171); }
+
+  .card .card-icon {
+    font-size: 22pt;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .card .card-label {
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .card .card-value {
+    font-size: 22pt;
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .card .card-value.highlight { color: var(--primary); }
+  .card .card-value.green { color: var(--accent2); }
+  .card .card-desc {
+    font-size: 9pt;
+    color: var(--mid);
+  }
+
+  /* ══════════════════════════ TABLES ══════════════════════════ */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  .data-table thead tr {
+    background: linear-gradient(135deg, var(--dark), var(--dark2));
+    color: var(--white);
+  }
+  .data-table thead th {
+    padding: 12px 16px;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    text-align: left;
+  }
+  .data-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+  .data-table tbody tr:nth-child(even) { background: var(--lighter); }
+  .data-table tbody tr:last-child { border-bottom: none; }
+  .data-table tbody td {
+    padding: 11px 16px;
+    font-size: 9.5pt;
+    color: var(--dark2);
+  }
+  .data-table .best-row { background: #EEF2FF !important; }
+  .data-table .best-row td { font-weight: 700; color: var(--primary-dark); }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .badge-green { background: #D1FAE5; color: #065F46; }
+  .badge-blue  { background: #DBEAFE; color: #1E40AF; }
+  .badge-purple{ background: #EDE9FE; color: #4C1D95; }
+  .badge-gold  { background: #FEF3C7; color: #92400E; }
+
+  /* ══════════════════════════ PIPELINE ══════════════════════════ */
+  .pipeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 24px;
+  }
+
+  .pipeline-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    padding-bottom: 6px;
+  }
+
+  .pipeline-step::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 42px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--border), transparent);
+  }
+  .pipeline-step:last-child::before { display: none; }
+
+  .step-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: var(--white);
+    font-size: 10pt;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(79,70,229,0.4);
+  }
+
+  .step-content {
+    flex: 1;
+    padding-top: 6px;
+    padding-bottom: 18px;
+  }
+  .step-content .step-title {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 3px;
+  }
+  .step-content .step-desc {
+    font-size: 9pt;
+    color: var(--mid);
+  }
+
+  /* ══════════════════════════ ARCH DIAGRAM ══════════════════════════ */
+  .arch-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 20px 0 28px;
+  }
+
+  .arch-box {
+    width: 100%;
+    max-width: 500px;
+    background: linear-gradient(135deg, #EEF2FF, #E0F2FE);
+    border: 1.5px solid #C7D2FE;
+    border-radius: 12px;
+    padding: 14px 20px;
+    text-align: center;
+  }
+  .arch-box .arch-title {
+    font-size: 10pt;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 3px;
+  }
+  .arch-box .arch-detail {
+    font-size: 8.5pt;
+    color: var(--mid);
+  }
+
+  .arch-box.input { background: linear-gradient(135deg, #F0FDF4, #DCFCE7); border-color: #A7F3D0; }
+  .arch-box.input .arch-title { color: #064E3B; }
+
+  .arch-box.output { background: linear-gradient(135deg, #FFF7ED, #FEF3C7); border-color: #FDE68A; }
+  .arch-box.output .arch-title { color: #92400E; }
+
+  .arch-arrow {
+    font-size: 18pt;
+    color: var(--primary);
+    line-height: 1.2;
+    margin: 2px 0;
+  }
+
+  /* ══════════════════════════ DIALECT GRID ══════════════════════════ */
+  .dialect-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .dialect-tag {
+    background: linear-gradient(135deg, #EEF2FF, #E0F2FE);
+    border: 1px solid #C7D2FE;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: center;
+    font-size: 9pt;
+    font-weight: 600;
+    color: var(--primary-dark);
+  }
+
+  /* ══════════════════════════ TWO-COL TEXT ══════════════════════════ */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 24px;
+  }
+
+  /* ══════════════════════════ HIGHLIGHT BOX ══════════════════════════ */
+  .highlight-box {
+    background: linear-gradient(135deg, #1E293B, #0F172A);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .highlight-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--accent2));
+  }
+  .highlight-box h4 {
+    color: #A5B4FC;
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .highlight-box p {
+    color: #CBD5E1;
+    font-size: 10pt;
+    line-height: 1.7;
+  }
+
+  /* ══════════════════════════ CODE BLOCK ══════════════════════════ */
+  .code-block {
+    background: #0F172A;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .code-block pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt;
+    color: #E2E8F0;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  .code-block pre .kw { color: #A78BFA; }
+  .code-block pre .str { color: #34D399; }
+  .code-block pre .num { color: #F59E0B; }
+  .code-block pre .cmt { color: #64748B; }
+  .code-block pre .fn { color: #67E8F9; }
+
+  .code-label {
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  /* ══════════════════════════ FEATURE LIST ══════════════════════════ */
+  .feature-list {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 9.5pt;
+    color: var(--dark2);
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-list li .icon {
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11pt;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ══════════════════════════ WER CHART ══════════════════════════ */
+  .wer-chart {
+    margin-bottom: 24px;
+  }
+  .wer-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .wer-bar-label {
+    width: 70px;
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: var(--mid);
+    text-align: right;
+  }
+  .wer-bar-track {
+    flex: 1;
+    height: 28px;
+    background: var(--lighter);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border);
+  }
+  .wer-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: var(--white);
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+  }
+  .wer-bar-fill.best { background: linear-gradient(90deg, var(--accent2), #34D399); }
+
+  /* Print */
+  @media print {
+    .cover { page-break-after: always; }
+    .page { page-break-after: always; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════ COVER PAGE -->
+<div class="cover">
+  <div class="cover-badge">🎙️ Technical Report · Televerse AI Hackathon 2025</div>
+
+  <div class="cover-bengali">শব্দতরী</div>
+  <div class="cover-subtitle-en">Sho<i>b</i>dotori — "Vessel of Words"</div>
+
+  <div class="cover-title">
+    Bridging Dialects to Standard Bangla<br>through Automatic Speech Recognition
+  </div>
+  <div class="cover-desc">
+    A fine-tuned Whisper Medium model trained on 20 Bangladeshi regional dialects,
+    delivering low-error-rate transcription of dialectal speech into standard written Bangla.
+  </div>
+
+  <div class="cover-metrics">
+    <div class="metric-box">
+      <div class="val green">6.17%</div>
+      <div class="lbl">Best WER</div>
+    </div>
+    <div class="metric-box">
+      <div class="val blue">20</div>
+      <div class="lbl">Dialects</div>
+    </div>
+    <div class="metric-box">
+      <div class="val purple">3,350</div>
+      <div class="lbl">Audio Samples</div>
+    </div>
+    <div class="metric-box">
+      <div class="val">4,000</div>
+      <div class="lbl">Training Steps</div>
+    </div>
+  </div>
+
+  <div class="cover-divider"></div>
+
+  <div class="cover-team">
+    <div class="team-label">Developed by</div>
+    <div class="team-name">Team BITWISEMIND</div>
+    <div class="hackathon">Televerse AI Hackathon · November 2025</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ PAGE 1: Overview + Architecture -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-text">শব্দতরী <span>SHOBDOTORI</span></div>
+    <div class="page-num">Page 1 of 3</div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Section: Overview -->
+    <div class="section-label">01 — Project Overview</div>
+    <h2 class="section-title">Problem & Solution</h2>
+    <p class="intro-text">
+      Bangladesh is home to an extraordinarily rich tapestry of regional dialects that differ substantially in
+      phonology, vocabulary, and prosody from standard literary Bangla. Mainstream ASR systems consistently fail
+      on dialectal speech, leaving millions of speakers underserved. <strong>SHOBDOTORI</strong> tackles this gap
+      directly by fine-tuning OpenAI's Whisper Medium on a curated 20-dialect regional dataset, enabling
+      robust, accurate transcription of dialectal audio into standardized written Bangla.
+    </p>
+
+    <!-- Key stats row -->
+    <div class="card-grid card-grid-4" style="margin-bottom:28px;">
+      <div class="card primary">
+        <span class="card-icon">🎯</span>
+        <div class="card-label">Best WER Achieved</div>
+        <div class="card-value highlight">6.17%</div>
+        <div class="card-desc">At step 4,000 — lower is better</div>
+      </div>
+      <div class="card green">
+        <span class="card-icon">🗺️</span>
+        <div class="card-label">Dialects Covered</div>
+        <div class="card-value green">20</div>
+        <div class="card-desc">All major Bangladeshi regions</div>
+      </div>
+      <div class="card gold">
+        <span class="card-icon">🎵</span>
+        <div class="card-label">Training Samples</div>
+        <div class="card-value">3,015</div>
+        <div class="card-desc">+ 335 evaluation samples</div>
+      </div>
+      <div class="card red">
+        <span class="card-icon">⏱️</span>
+        <div class="card-label">Training Duration</div>
+        <div class="card-value">~8.5h</div>
+        <div class="card-desc">On NVIDIA Tesla T4 GPU</div>
+      </div>
+    </div>
+
+    <!-- Architecture -->
+    <div class="section-label">02 — System Architecture</div>
+    <h2 class="section-title">Model Pipeline</h2>
+
+    <div class="two-col" style="margin-top:16px;">
+      <div>
+        <div class="arch-flow">
+          <div class="arch-box input">
+            <div class="arch-title">🎙️ Audio Input</div>
+            <div class="arch-detail">WAV file · 16 kHz mono · any regional dialect</div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-box">
+            <div class="arch-title">📊 Whisper Feature Extractor</div>
+            <div class="arch-detail">Log-Mel Spectrogram · 80 mel bins · 30s window</div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-box">
+            <div class="arch-title">🧠 Whisper Medium Encoder</div>
+            <div class="arch-detail">~307M parameters · Transformer · contextual embeddings</div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-box">
+            <div class="arch-title">📝 Whisper Decoder</div>
+            <div class="arch-detail">Autoregressive generation · Bengali language head · task=transcribe</div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-box output">
+            <div class="arch-title">✅ Standard Bangla Output</div>
+            <div class="arch-detail">Unicode Bengali text · standardized orthography</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="subsection">Base Model Chain</h3>
+        <ul class="feature-list" style="margin-bottom:20px;">
+          <li>
+            <div class="icon">1️⃣</div>
+            <div>
+              <strong>openai/whisper-medium</strong><br>
+              <span style="font-size:8.5pt;color:#64748B;">OpenAI's original multilingual model (300M params). Foundation for Bengali speech.</span>
+            </div>
+          </li>
+          <li>
+            <div class="icon">2️⃣</div>
+            <div>
+              <strong>bengaliAI/tugstugi-regional-asr</strong><br>
+              <span style="font-size:8.5pt;color:#64748B;">Fine-tuned on BEN10 Kaggle competition data. Used as our training starting point.</span>
+            </div>
+          </li>
+          <li>
+            <div class="icon">3️⃣</div>
+            <div>
+              <strong>BITWISEMIND Fine-tune</strong><br>
+              <span style="font-size:8.5pt;color:#64748B;">Further fine-tuned on our custom 20-dialect regional dataset. Final model.</span>
+            </div>
+          </li>
+        </ul>
+
+        <h3 class="subsection">Key Technical Choices</h3>
+        <ul class="feature-list">
+          <li><div class="icon">⚡</div><div><strong>FP16 Mixed Precision</strong> — halved GPU memory while maintaining accuracy</div></li>
+          <li><div class="icon">🔀</div><div><strong>Gradient Checkpointing</strong> — enabled training the full 300M model on T4</div></li>
+          <li><div class="icon">📦</div><div><strong>Gradient Accumulation ×4</strong> — effective batch size of 16 from 4 per device</div></li>
+          <li><div class="icon">📏</div><div><strong>WER Evaluation</strong> — checkpoint selected by lowest Word Error Rate</div></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <span>SHOBDOTORI · Team BITWISEMIND · Televerse AI Hackathon 2025</span>
+    <span>Confidential Technical Report</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ PAGE 2: Dataset + Training -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-text">শব্দতরী <span>SHOBDOTORI</span></div>
+    <div class="page-num">Page 2 of 3</div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Dataset Section -->
+    <div class="section-label">03 — Dataset</div>
+    <h2 class="section-title">20 Regional Dialects of Bangladesh</h2>
+    <p style="color:#64748B;font-size:9.5pt;margin-bottom:16px;">
+      Dataset sourced from HuggingFace Hub (<code style="background:#EEF2FF;padding:2px 6px;border-radius:4px;color:#4F46E5;">bitwisemind/hackathon</code>).
+      Audio files paired with CSV transcription annotations, one per district.
+    </p>
+
+    <div class="dialect-grid">
+      <div class="dialect-tag">📍 Dhaka</div>
+      <div class="dialect-tag">📍 Mymensingh</div>
+      <div class="dialect-tag">📍 Chittagong</div>
+      <div class="dialect-tag">📍 Comilla</div>
+      <div class="dialect-tag">📍 Feni</div>
+      <div class="dialect-tag">📍 Noakhali</div>
+      <div class="dialect-tag">📍 Lakshmipur</div>
+      <div class="dialect-tag">📍 Brahmanbaria</div>
+      <div class="dialect-tag">📍 Sylhet</div>
+      <div class="dialect-tag">📍 Barisal</div>
+      <div class="dialect-tag">📍 Bhola</div>
+      <div class="dialect-tag">📍 Khulna</div>
+      <div class="dialect-tag">📍 Jessore</div>
+      <div class="dialect-tag">📍 Jhenaidah</div>
+      <div class="dialect-tag">📍 Kushtia</div>
+      <div class="dialect-tag">📍 Rajshahi</div>
+      <div class="dialect-tag">📍 Bogura</div>
+      <div class="dialect-tag">📍 Natore</div>
+      <div class="dialect-tag">📍 Pabna</div>
+      <div class="dialect-tag">📍 Rangpur</div>
+    </div>
+
+    <div class="card-grid card-grid-3" style="margin-bottom:28px;">
+      <div class="card primary">
+        <span class="card-icon">🚂</span>
+        <div class="card-label">Train Split (90%)</div>
+        <div class="card-value highlight">3,015</div>
+        <div class="card-desc">Audio + transcription pairs</div>
+      </div>
+      <div class="card green">
+        <span class="card-icon">🧪</span>
+        <div class="card-label">Eval Split (10%)</div>
+        <div class="card-value green">335</div>
+        <div class="card-desc">Held-out for WER evaluation</div>
+      </div>
+      <div class="card gold">
+        <span class="card-icon">🎵</span>
+        <div class="card-label">Audio Format</div>
+        <div class="card-value" style="font-size:14pt;">16 kHz</div>
+        <div class="card-desc">WAV · mono · resampled</div>
+      </div>
+    </div>
+
+    <!-- Training Configuration -->
+    <div class="section-label">04 — Training Configuration</div>
+    <h2 class="section-title">Hyperparameters & Setup</h2>
+
+    <div class="two-col" style="margin-top:16px;">
+      <div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Batch size (per GPU)</td><td><span class="badge badge-blue">4</span></td></tr>
+            <tr><td>Gradient accumulation</td><td><span class="badge badge-blue">4 steps</span></td></tr>
+            <tr><td>Effective batch size</td><td><span class="badge badge-purple">16</span></td></tr>
+            <tr><td>Learning rate</td><td><code>1e-5</code></td></tr>
+            <tr><td>Warmup steps</td><td>200</td></tr>
+            <tr><td>Max training steps</td><td><span class="badge badge-gold">4,000</span></td></tr>
+            <tr><td>Optimizer</td><td>AdamW</td></tr>
+            <tr><td>Gradient clip norm</td><td>1.0</td></tr>
+            <tr><td>Precision</td><td>FP16 (O1)</td></tr>
+            <tr><td>Eval strategy</td><td>Every 1,000 steps</td></tr>
+            <tr><td>Metric</td><td>WER (lower = better)</td></tr>
+            <tr><td>Monitoring</td><td>TensorBoard</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 class="subsection">Hardware Platform</h3>
+        <table class="data-table" style="margin-bottom:16px;">
+          <thead>
+            <tr><th>Component</th><th>Spec</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>GPU</td><td>NVIDIA Tesla T4</td></tr>
+            <tr><td>VRAM</td><td>14.74 GB</td></tr>
+            <tr><td>CUDA</td><td>12.6</td></tr>
+            <tr><td>Driver</td><td>560.35.03</td></tr>
+            <tr><td>PyTorch</td><td>2.6.0+cu124</td></tr>
+            <tr><td>HF Transformers</td><td>4.45.0</td></tr>
+            <tr><td>Platform</td><td>Kaggle Notebooks</td></tr>
+          </tbody>
+        </table>
+
+        <div class="highlight-box">
+          <h4>⏱️ Training Timeline</h4>
+          <p>Total wall-clock training time was approximately <strong style="color:#67E8F9;">8 hours 34 minutes</strong> for 4,000 steps on a single Tesla T4. The model was evaluated every 1,000 steps and the best checkpoint (lowest WER) was automatically retained.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <span>SHOBDOTORI · Team BITWISEMIND · Televerse AI Hackathon 2025</span>
+    <span>Confidential Technical Report</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ PAGE 3: Results + Inference -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-text">শব্দতরী <span>SHOBDOTORI</span></div>
+    <div class="page-num">Page 3 of 3</div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Results -->
+    <div class="section-label">05 — Training Results</div>
+    <h2 class="section-title">Performance Metrics</h2>
+
+    <div class="two-col" style="margin-top:16px;">
+      <div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Step</th>
+              <th>Train Loss</th>
+              <th>Val Loss</th>
+              <th>WER (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1,000</td><td>0.0081</td><td>0.0642</td><td>10.96%</td></tr>
+            <tr><td>2,000</td><td>0.0013</td><td>0.0551</td><td>7.11%</td></tr>
+            <tr><td>3,000</td><td>0.0009</td><td>0.0577</td><td>7.88%</td></tr>
+            <tr class="best-row"><td>✅ 4,000</td><td>0.0004</td><td>0.0500</td><td>6.17%</td></tr>
+          </tbody>
+        </table>
+
+        <h3 class="subsection" style="margin-top:16px;">WER Progression</h3>
+        <div class="wer-chart">
+          <div class="wer-bar-row">
+            <div class="wer-bar-label">Step 1K</div>
+            <div class="wer-bar-track">
+              <div class="wer-bar-fill" style="width:100%;">10.96%</div>
+            </div>
+          </div>
+          <div class="wer-bar-row">
+            <div class="wer-bar-label">Step 2K</div>
+            <div class="wer-bar-track">
+              <div class="wer-bar-fill" style="width:64.9%;">7.11%</div>
+            </div>
+          </div>
+          <div class="wer-bar-row">
+            <div class="wer-bar-label">Step 3K</div>
+            <div class="wer-bar-track">
+              <div class="wer-bar-fill" style="width:71.9%;">7.88%</div>
+            </div>
+          </div>
+          <div class="wer-bar-row">
+            <div class="wer-bar-label">Step 4K ✅</div>
+            <div class="wer-bar-track">
+              <div class="wer-bar-fill best" style="width:56.3%;">6.17% BEST</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="subsection">Training Pipeline</h3>
+        <div class="pipeline">
+          <div class="pipeline-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Environment Setup</div>
+              <div class="step-desc">Install dependencies, verify GPU (Tesla T4), check CUDA 12.6</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Data Download & Extraction</div>
+              <div class="step-desc">Pull from HuggingFace Hub — Train.zip (289MB), Test.zip (63MB), annotations</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Dataset Loading</div>
+              <div class="step-desc">Custom loader across 20 district CSVs → 3,350 valid samples → 90/10 split</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Audio Preprocessing</div>
+              <div class="step-desc">Resample to 16kHz → Log-Mel spectrogram → tokenize transcriptions → labels</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <div class="step-title">Model Fine-tuning</div>
+              <div class="step-desc">Seq2SeqTrainer · 4,000 steps · FP16 · gradient checkpointing · WER monitoring</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <div class="step-title">Model Saving</div>
+              <div class="step-desc">Best checkpoint saved to <code>./whisper-medium-bengali-regional-final</code></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inference Section -->
+    <div class="section-label">06 — Inference Summary</div>
+    <h2 class="section-title">Using the Fine-Tuned Model</h2>
+
+    <div class="two-col" style="margin-top:16px;">
+      <div>
+        <div class="code-label">Python — Quick Inference</div>
+        <div class="code-block">
+<pre><span class="kw">from</span> transformers <span class="kw">import</span> (
+    WhisperForConditionalGeneration,
+    WhisperProcessor
+)
+<span class="kw">import</span> librosa, torch
+
+<span class="cmt"># Load fine-tuned model</span>
+path = <span class="str">"./whisper-medium-bengali-regional-final"</span>
+processor = WhisperProcessor.<span class="fn">from_pretrained</span>(path)
+model = WhisperForConditionalGeneration.<span class="fn">from_pretrained</span>(path)
+model.<span class="fn">eval</span>()
+
+<span class="cmt"># Load audio (any Bangla dialect)</span>
+audio, _ = librosa.<span class="fn">load</span>(<span class="str">"dialect_audio.wav"</span>, sr=<span class="num">16000</span>)
+
+<span class="cmt"># Extract features & transcribe</span>
+inputs = processor(audio, sampling_rate=<span class="num">16000</span>,
+                   return_tensors=<span class="str">"pt"</span>)
+<span class="kw">with</span> torch.no_grad():
+    ids = model.<span class="fn">generate</span>(inputs.input_features)
+
+result = processor.<span class="fn">batch_decode</span>(ids,
+             skip_special_tokens=<span class="kw">True</span>)[<span class="num">0</span>]
+<span class="fn">print</span>(<span class="str">f"Transcription: {result}"</span>)</pre>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="subsection">Saved Model Components</h3>
+        <ul class="feature-list" style="margin-bottom:20px;">
+          <li><div class="icon">⚖️</div><div><strong>Model Weights</strong> — Fine-tuned safetensors (~3.06 GB)</div></li>
+          <li><div class="icon">🔧</div><div><strong>Model Config</strong> — Architecture & generation settings</div></li>
+          <li><div class="icon">🔤</div><div><strong>Tokenizer</strong> — Bengali WhisperTokenizer</div></li>
+          <li><div class="icon">📊</div><div><strong>Feature Extractor</strong> — Log-Mel audio processor</div></li>
+          <li><div class="icon">⚙️</div><div><strong>Generation Config</strong> — Forced decoder IDs cleared</div></li>
+        </ul>
+
+        <h3 class="subsection">Technology Stack</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+          <span class="badge badge-blue">PyTorch 2.6</span>
+          <span class="badge badge-purple">Transformers 4.45</span>
+          <span class="badge badge-green">Datasets 2.16</span>
+          <span class="badge badge-gold">Accelerate 1.0</span>
+          <span class="badge badge-blue">Evaluate 0.4</span>
+          <span class="badge badge-purple">jiwer 3.0</span>
+          <span class="badge badge-green">Librosa 0.10</span>
+          <span class="badge badge-gold">TensorBoard 2.15</span>
+        </div>
+
+        <div class="highlight-box">
+          <h4>🔗 References</h4>
+          <p>
+            <strong style="color:#A5B4FC;">Base Model:</strong> bengaliAI/tugstugi_bengaliai-regional-asr_whisper-medium<br>
+            <strong style="color:#A5B4FC;">Dataset:</strong> bitwisemind/hackathon (HuggingFace Hub)<br>
+            <strong style="color:#A5B4FC;">Architecture:</strong> openai/whisper-medium<br>
+            <strong style="color:#A5B4FC;">Platform:</strong> Kaggle · NVIDIA Tesla T4
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <span>SHOBDOTORI · Team BITWISEMIND · Televerse AI Hackathon 2025</span>
+    <span>Made with ❤️ for the Bengali-speaking community</span>
+  </div>
+</div>
+
+</body>
+</html>
